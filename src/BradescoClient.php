@@ -2,7 +2,7 @@
 
 namespace BradescoOnline;
 
-require '../vendor/autoload.php';
+// require '../vendor/autoload.php';
 require 'Api.php';
 
 use BradescoOnline\Api;
