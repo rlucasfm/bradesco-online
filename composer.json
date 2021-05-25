@@ -1,5 +1,5 @@
 {
-    "name": "richard/bradesco-online",
+    "name": "richard-lucas/bradesco-online",
     "description": "SDK PHP para registros de boletos online Bradesco, a partir da API disponibilizada pela mesma",
     "type": "library",
     "license": "GPL-3.0",
