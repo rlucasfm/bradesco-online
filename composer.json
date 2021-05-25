@@ -1,0 +1,20 @@
+{
+    "name": "richard/bradesco-online",
+    "description": "SDK PHP para registros de boletos online Bradesco, a partir da API disponibilizada pela mesma",
+    "type": "library",
+    "license": "GPL-3.0",
+    "authors": [
+        {
+            "name": "rlucasfm",
+            "email": "richardlucasfm@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "BradescoOnline\\": "src/"
+        }
+    },
+    "require": {
+        "guzzlehttp/guzzle": "7.0"
+    }
+}
