@@ -35,7 +35,7 @@ class Api
 
     public function setCertKeys()
     {
-        $cert_file = file_get_contents($this->cert_path);
+        $cert_file = file_get_contents(__DIR__ . '\\' . $this->cert_path);
         if (!openssl_pkcs12_read($cert_file, $result, $this->cert_pass)) {
             throw new \Exception('Unable to read certificate file .pfx. Please check the certificate password.');
         }
@@ -46,8 +46,8 @@ class Api
 
     private function encryptData($data)
     {
-        $msgFile = TEMP . 'jsonFile';
-        $signedFile = TEMP . 'signedFile';
+        $msgFile = __DIR__ . 'jsonFile';
+        $signedFile = __DIR__ . 'signedFile';
         file_put_contents($msgFile, $data);
 
         openssl_pkcs7_sign(
