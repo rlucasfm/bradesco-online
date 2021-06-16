@@ -54,12 +54,42 @@ class BradescoClient
     public function send_request()
     {        
         try {
-            $response = $this->client->request('POST', '', ['body' => $this->enc_data]);
+            // $response = $this->client->request('POST', '', ['body' => $this->enc_data]);
+            $response = $this->client_request($this->enc_data);
         } catch (\Throwable $th) {
             return $th->getMessage();
         }
 
         return $response;
+    }
+
+    private function client_request($post_data)
+    {
+        $ch = curl_init(ENDPOINT);
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $post_data);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+
+        $retorno = curl_exec($ch);
+        if (curl_errno($ch)) {
+            $info = curl_getinfo($ch);
+            throw new \Exception('Não foi possível registrar o boleto. ' . 'Erro:' . curl_errno($ch) . '.<br>' . $info);
+        }
+
+        $doc = new \DOMDocument();
+        $doc->loadXML($retorno);
+        $retorno = $doc->getElementsByTagName('return')->item(0)->nodeValue;
+        $retorno = preg_replace('/, }/i', '}', $retorno); 
+        $retorno = json_decode($retorno);
+        
+        echo "RETORNO<br>";
+        print_r($retorno);
+        
+        if (!empty($retorno->cdErro)) {
+            throw new \Exception('Não foi possível registrar o boleto. ' . $retorno->msgErro);
+        }
     }
 }
 
